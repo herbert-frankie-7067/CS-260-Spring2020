@@ -1,0 +1,115 @@
+#include <iostream>
+//BY: FRANKIE HERBERT
+//HELP FROM: TUTORING, CLASSNOTES, BOOK, GEEKSFORGEEKS, CPP CITES
+using namespace std;
+
+#define SIZE 50 // default capacity
+
+class Queue_Elements
+{
+    int *arr; // Store queue elements to array
+    int capacity; // capacity
+    int front;  //points to front
+    int rear;  //points to rear
+    int count;  // current size
+
+public:
+    Queue_Elements(int size = SIZE);  // constructor
+    ~Queue_Elements();  //destructor
+
+    void dequeue();
+    void enqueue(int x);
+    int peek();
+    int size();
+    bool isempty();
+    bool isfull();
+
+};
+
+#include "array_queueDONE.h"
+using namespace std;
+
+Queue_Elements::Queue_Elements(int size)
+{
+    arr = new int[size];
+    capacity = size;
+    front = 0;
+    rear = -1;
+    count = 0;
+}
+Queue_Elements::~Queue_Elements() // free memory
+{
+    delete arr;
+}
+void Queue_Elements::dequeue() //remove from the front
+{
+    if (isempty())
+    {
+        cout <<"exit due to underflow"; //checking for underflow
+        exit(EXIT_FAILURE);
+    }
+    cout <<"Remove " << arr[front] <<'\n';
+
+    front = (front + 1) % capacity;
+    count--;
+}
+void Queue_Elements::enqueue(int item) //add item to queue
+{
+    if(isfull())  //check for overflow
+    {
+        cout <<"exit due to overflow\n";
+        exit(EXIT_FAILURE);
+    }
+    cout <<"Insert: " << item << '\n';
+
+    rear = (rear + 1) % capacity;
+    arr[rear] = item;
+    count++;
+}
+int Queue_Elements::peek() //peek in front
+{
+    if (isempty())
+    {
+        cout <<"exit due to underflow\n";
+        exit(EXIT_FAILURE);
+    }
+    return arr[front];
+}
+int Queue_Elements::size() //get size
+{
+    return count;
+}
+bool Queue_Elements::isempty() // is queue empty?
+{
+    return (size() == 0);
+}
+bool Queue_Elements::isfull() // is queue full?
+{
+    return (size() == capacity);
+}
+int main() // main function
+{
+    Queue_Elements q(5);  //capacity 5
+
+    q.enqueue(1);
+    q.enqueue(2);
+    q.enqueue(3);
+
+    cout <<"Front: " << q.peek() << endl;
+    q.dequeue();
+
+    q.enqueue(4);
+
+    cout <<"Size: " << q.size() << endl;
+
+    q.dequeue();
+    q.dequeue();
+    q.dequeue();
+
+    if (q.isempty())
+        cout <<"Empty\n";
+    else
+        cout <<"Not Empty\n";
+
+    return 0;
+}
