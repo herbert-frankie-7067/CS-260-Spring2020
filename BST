@@ -64,18 +64,18 @@ int postOrder(Node *root){     //create a post-order
 }
 
 int main(){
-	Node *root = NULL;
-	Node *ptr = NULL;
-	insertData(&root, 2);                   // Orginal binary tree to be traversed
-	insertData(&root, 18);
-	insertData(&root, 22);
-	insertData(&root, 99);
-	insertData(&root, 4);
-  	cout<<"PreOrder Traversing: \n";
-  	preOrder(root);
-	cout<<"\nInOrder Traversing: \n";
-	inOrder(root);
- 	cout<<"\nPostOrder Traversing: \n";
- 	postOrder(root);
+    Node *root = NULL; 
+    Node *ptr = NULL;
+    insertData(&root, 2);                   //binary tree to be traversed
+    insertData(&root, 18);
+    insertData(&root, 22);
+    insertData(&root, 99);
+    insertData(&root, 4);
+    cout<<"PreOrder Traversing: \n";      //printing the pre-order 
+    preOrder(root);
+    cout<<"\nInOrder Traversing: \n";      //printing the in-order
+    inOrder(root); 
+    cout<<"\nPostOrder Traversing: \n";     //printing the post-order
+    postOrder(root);
 
 }
