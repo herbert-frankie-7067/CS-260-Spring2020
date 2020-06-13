@@ -1,0 +1,75 @@
+# include <iostream>
+
+//BY: Frankie Herbert
+//Help From: GeeksForGeeks, Software testing help, BOOK, class-notes
+
+struct Node {
+	int data;
+	Node *left;
+	Node *right;
+};
+
+#include "binary_node.h"
+
+int insertNode(Node** root , Node *newNode , int data){
+	if (*root == NULL){
+		(*root) = newNode;
+		return  0;
+	}
+	else if ((*root) ->data < data)       
+		insertNode(&((*root) ->right) , newNode ,data);
+	else if ((*root) ->data > data)
+		insertNode(&((*root)->left), newNode, data);
+	else
+		return 1;
+}
+int insertData(Node** root , int data){
+ 	Node *newNode = new Node;
+ 	if (!newNode)
+		return 1;
+
+	newNode->data = data;
+	newNode->left = NULL;            // To create a Binary Node
+	newNode->right = NULL;
+	insertNode(&(*root), newNode , data);
+	return 0;
+}
+int preOrder(Node *root){                 // create a pre-order binary tree
+	if (root){                                  //organizing nodes for per-order
+            cout<<root->data<< " - " ;
+            preOrder(root->left);
+            preOrder(root->right);
+	}
+	return 0;
+}
+int inOrder(Node *root){                     // create a in-order binary tree
+	if (root){
+            inOrder(root->left);             //organizing nodes for in-order
+            cout<<root->data<< " - ";
+            inOrder(root->right);
+	}
+}
+int postOrder(Node *root){                 // create a post-order binary tree
+	if (root){
+            postOrder(root->left);         //organizing nodes for post-order
+            postOrder(root->right);
+            cout<<root->data<< " - ";
+	}
+}
+
+int main(){
+	Node *root = NULL;
+	Node *ptr = NULL;
+	insertData(&root,2);                   // Orginal binary tree to be traversed
+	insertData(&root,18);
+	insertData(&root,22);
+	insertData(&root,99);
+	insertData(&root,4);
+    cout<<"PreOrder Traversing: \n";
+    preOrder(root);
+	cout<<"\nInOrder Traversing: \n";
+	inOrder(root);
+    cout<<"\nPostOrder Traversing: \n";
+    postOrder(root);
+
+}
