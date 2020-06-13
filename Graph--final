@@ -1,0 +1,81 @@
+#include <iostream>
+
+using namespace std;
+
+
+struct adjNode {        //Nodes
+    int destination;      //initialing destination
+    adjNode* next;
+};
+
+struct adjList {       //adjacency list
+    adjNode *head;
+};
+
+#include <iostream>
+//BY: Frankie Herbert
+//Help From: GeeksForGeeks, Software testing help, BOOK, class-notes
+//cited sources: https://www.geeksforgeeks.org/graph-representations-using-set-hash/
+// and:  https://stackabuse.com/graphs-in-java-representing-graphs-in-code/
+
+using namespace std;
+
+#include "node_adj.h"
+
+class Graph {      //creating class graph
+
+private:
+    int vert;
+    struct adjList* array;
+
+public:
+    Graph(int vert){
+        this->vert = vert;
+        array = new adjList[vert];
+        for (int i = 0; i < vert; ++i)
+            array[i].head = NULL;
+    }
+
+    adjNode* newadjNode(int destination){    //creating a new adjacency list
+        adjNode* newNode = new adjNode;
+        newNode->destination = destination;   //set new node to destination in list
+        newNode->next = NULL;
+        return newNode;
+    }
+
+    void add_edge(int source, int destination){   //adding edge to graph
+        adjNode* newNode = newadjNode(destination);
+        newNode->next = array[source].head;     //adding edge in array from source
+        array[source].head = newNode;
+        newNode = newadjNode(source);
+        newNode->next = array[destination].head;    //to destination
+        array[destination].head = newNode;
+    }
+
+    void printGraph(){    //print graph
+        int vertices;
+        for (vertices = 0; vertices < vert; ++vertices){
+            adjNode* pnt_list = array[vertices].head;
+            cout<<"\n VERTEX "<<vertices<<"\n has an edge towards: ";  //display results of graph
+            while (pnt_list){
+                cout<<" - "<<pnt_list->destination;
+                pnt_list = pnt_list->next;
+            }
+            cout<<endl;
+        }
+    }
+};
+
+int main(){    //main
+    Graph graph(5);  //graph array
+    graph.add_edge(0,1);    //setting edge
+    graph.add_edge(0,4);
+    graph.add_edge(1,2);
+    graph.add_edge(1,3);
+    graph.add_edge(1,4);
+    graph.add_edge(2,3);
+    graph.add_edge(3,4);  //printing the adjacency list of graph
+
+    graph.printGraph();
+    return 0;
+}
